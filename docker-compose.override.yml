@@ -5,3 +5,12 @@
 #    environment:
 #      spring_profiles_active: production
 
+services:
+  # The restored 2024 database (postgres_backup_2024_10_31) came from a customized
+  # requisition service with two extra migrations (dose 1/2 columns, PEV template flag)
+  # and is missing one official migration. Let Flyway skip the unknown ones and apply
+  # the missing one instead of refusing to start.
+  requisition:
+    environment:
+      SPRING_FLYWAY_IGNOREMISSINGMIGRATIONS: "true"
+      SPRING_FLYWAY_OUTOFORDER: "true"
